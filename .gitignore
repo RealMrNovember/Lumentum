@@ -1,0 +1,15 @@
+core_engine/target/
+.venv/
+.tools/
+target/
+core_engine_cli/target/
+core_engine_py/target/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.DS_Store
+Thumbs.db
+mobile_app/flutter/*/build/
+mobile_app/flutter/*/.idea/
+api_service/__pycache__/

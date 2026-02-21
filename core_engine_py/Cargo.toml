@@ -1,0 +1,12 @@
+[package]
+name = "core_engine_py"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "lumentum_py"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "0.21", features = ["extension-module"] }
+lumentum_core = { path = "../core_engine" }
