@@ -10,5 +10,7 @@ fn main() {
     };
     let e = Engine::new();
     let result = e.process(&text);
-    println!("{}", result);
+    for item in result {
+        println!("{}|{}|{}", item.token, item.focus_index, item.pace_ms);
+    }
 }

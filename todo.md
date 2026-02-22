@@ -119,8 +119,8 @@ Bu dosya, LUMENTUM’in “en küçük yapı taşından uçtaki ürün deneyimin
 
 ## Sonraki Yakın Adımlar
 - [ ] Flutter SDK kurulumunu tamamla ve flutter doctor çıktısını al
-- [ ] /process yanıtını yapılandırılmış JSON (token, focus_index, pace_ms) yap
-- [ ] Omni-Parser v2 için TXT/EPUB/PDF modüllerinin iskeletini çıkar
-- [ ] Pyo3 (MSVC) ile native Python modülünü derle ve backend’e doğrudan bağla
+- [x] /process yanıtını yapılandırılmış JSON (token, focus_index, pace_ms) yap
+- [x] Omni-Parser v2 için TXT/EPUB/PDF modüllerinin iskeletini çıkar
+- [x] Pyo3 (MSVC) ile native Python modülünü derle ve backend’e doğrudan bağla
 - [ ] Basit performans bench’leri ekle ve hedef latansiyi ölç
 
