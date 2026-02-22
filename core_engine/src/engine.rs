@@ -16,11 +16,15 @@ impl Engine {
     pub fn process(&self, text: &str) -> Vec<TokenData> {
         let tokens = tokenizer::tokenize(text);
         let mut out = Vec::new();
-        for t in tokens {
-            let idx = orp::focus_index(&t);
-            let ms = pacing::pace_ms(&t);
+        let total = tokens.len();
+
+        for (i, t) in tokens.iter().enumerate() {
+            let idx = orp::focus_index(t);
+            let is_last = i == total - 1 || t.ends_with('.') || t.ends_with('!') || t.ends_with('?');
+            let ms = pacing::pace_ms(t, is_last);
+
             out.push(TokenData {
-                token: t,
+                token: t.clone(),
                 focus_index: idx,
                 pace_ms: ms,
             });

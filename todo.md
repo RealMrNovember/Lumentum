@@ -14,10 +14,10 @@ Bu dosya, LUMENTUM’in “en küçük yapı taşından uçtaki ürün deneyimin
 
 ## Faz 1 — Ignition (RSVP + ORP MVP, Local Only)
 ### Çekirdek Motor (Rust)
-- [ ] Tokenization: Unicode-uyumlu, noktalama/bağlaç/ek, kısaltma & sayı desteği
-- [ ] ORP++: hece temelli dinamik odak; teknik terimlerde çoklu odak noktası
-- [ ] “Tanıma anı” mikro gecikmeleri: kelime tanınma sinyallerine göre zamanlama
-- [ ] CPS: anlam yoğunluğu, dilbilgisel rol, cümle konumu, semantik ilişki ile hız
+- [x] Tokenization: Unicode-uyumlu, noktalama/bağlaç/ek, kısaltma & sayı desteği
+- [x] ORP++: hece temelli dinamik odak; teknik terimlerde çoklu odak noktası
+- [x] “Tanıma anı” mikro gecikmeleri: kelime tanınma sinyallerine göre zamanlama
+- [x] CPS: anlam yoğunluğu, dilbilgisel rol, cümle konumu, semantik ilişki ile hız
 - [ ] Micro-timing buffer: akış halinde gecikme/sürat kontrolü
 - [ ] Motor API: token, focus_index, pace_ms, bayraklar; stream çıktısı
 - [ ] Birim testleri ve mikro kıyaslar (bench)
@@ -27,9 +27,9 @@ Bu dosya, LUMENTUM’in “en küçük yapı taşından uçtaki ürün deneyimin
 - [ ] Gesture tabanlı hız kontrolü; kullanıcının hissi “ben kontrol ediyorum”
 - [ ] Yerel ayarlar: hız, font, tema; yorgunluğu azaltan minimal UI
 ### Backend (FastAPI)
-- [ ] /health ve /process uçları; yerel metin için akış işleme
-- [ ] Rust çekirdeğe köprü: pyo3 modülü (MSVC hazır olduğunda) veya CLI
-- [ ] Basit hata yönetimi ve giriş doğrulama
+- [x] /health ve /process uçları; yerel metin için akış işleme
+- [x] Rust çekirdeğe köprü: pyo3 modülü (MSVC hazır olduğunda) veya CLI
+- [x] Basit hata yönetimi ve giriş doğrulama
 ### Doğrulama
 - [ ] MVP hissi: ORP farkı ve göz yorgunluğu farkının algılanması
 - [ ] Örnek metinlerle hız/odak testleri
