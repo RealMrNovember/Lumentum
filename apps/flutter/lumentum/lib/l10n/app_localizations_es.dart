@@ -168,6 +168,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get pdfImporting => 'Importing PDF…';
 
   @override
+  String get pdfImportSuccess => 'added to library.';
+
+  @override
   String get readingLanguage => 'Interface language';
 
   @override

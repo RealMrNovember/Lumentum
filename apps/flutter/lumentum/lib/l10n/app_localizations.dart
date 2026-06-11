@@ -404,6 +404,12 @@ abstract class AppLocalizations {
   /// **'Importing PDF…'**
   String get pdfImporting;
 
+  /// No description provided for @pdfImportSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'added to library.'**
+  String get pdfImportSuccess;
+
   /// No description provided for @readingLanguage.
   ///
   /// In en, this message translates to:

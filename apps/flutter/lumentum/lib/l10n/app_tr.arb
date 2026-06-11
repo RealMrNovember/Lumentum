@@ -50,6 +50,7 @@
   "importPdf": "PDF içe aktar",
   "pdfImportFailed": "PDF içe aktarılamadı. Metin tabanlı bir PDF deneyin veya metni yapıştırın.",
   "pdfImporting": "PDF içe aktarılıyor…",
+  "pdfImportSuccess": "kütüphaneye eklendi.",
   "readingLanguage": "Arayüz dili",
   "documentTitle": "Başlık",
   "save": "Kaydet",

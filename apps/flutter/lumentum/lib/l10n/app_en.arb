@@ -56,6 +56,7 @@
   "importPdf": "Import PDF",
   "pdfImportFailed": "Could not import PDF. Try a text-based PDF or paste the text instead.",
   "pdfImporting": "Importing PDF…",
+  "pdfImportSuccess": "added to library.",
   "readingLanguage": "Interface language",
   "documentTitle": "Title",
   "save": "Save",

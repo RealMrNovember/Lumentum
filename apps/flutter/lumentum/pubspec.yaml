@@ -40,6 +40,9 @@ dependencies:
   shared_preferences: ^2.3.0
   uuid: ^4.5.1
   file_picker: ^8.1.7
+  flutter_web_plugins:
+    sdk: flutter
+  web: ^1.1.0
   cupertino_icons: ^1.0.8
 
 dev_dependencies:

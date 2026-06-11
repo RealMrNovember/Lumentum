@@ -1,10 +1,11 @@
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:lumentum/l10n/app_localizations.dart';
 import 'package:lumentum_shared/lumentum_shared.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/auth/auth_provider.dart';
+import '../../core/files/pdf_file_picker.dart';
+import '../../core/files/picked_pdf_file.dart';
 import '../../core/reading/reading_preferences_provider.dart';
 import '../../shared/widgets/lumentum_scaffold.dart';
 import '../reader/reader_screen.dart';
@@ -335,23 +336,23 @@ class _LibraryActions {
 
   static Future<void> importPdf(BuildContext context) async {
     final l10n = AppLocalizations.of(context)!;
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: const ['pdf'],
-      withData: true,
-    );
-    if (result == null || result.files.isEmpty || !context.mounted) return;
 
-    final file = result.files.first;
-    final bytes = file.bytes;
-    if (bytes == null || bytes.isEmpty) {
-      _showError(context, l10n.pdfImportFailed);
+    PickedPdfFile? picked;
+    try {
+      picked = await pickPdfFile();
+    } catch (e) {
+      if (context.mounted) {
+        _showError(context, '${l10n.pdfImportFailed}\n$e');
+      }
       return;
     }
+
+    if (picked == null || !context.mounted) return;
 
     showDialog<void>(
       context: context,
       barrierDismissible: false,
+      useRootNavigator: true,
       builder: (_) => AlertDialog(
         content: Row(
           children: [
@@ -366,8 +367,8 @@ class _LibraryActions {
     try {
       final api = context.read<AuthProvider>().api;
       final extracted = await api.extractPdf(
-        bytes: bytes,
-        filename: file.name,
+        bytes: picked.bytes,
+        filename: picked.name,
       );
       if (!context.mounted) return;
       Navigator.of(context, rootNavigator: true).pop();
@@ -376,15 +377,20 @@ class _LibraryActions {
             text: extracted.text,
             source: 'pdf',
           );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('${extracted.title} ${l10n.pdfImportSuccess}')),
+        );
+      }
     } on LumentumApiException catch (e) {
       if (context.mounted) {
         Navigator.of(context, rootNavigator: true).pop();
         _showError(context, e.body);
       }
-    } catch (_) {
+    } catch (e) {
       if (context.mounted) {
         Navigator.of(context, rootNavigator: true).pop();
-        _showError(context, l10n.pdfImportFailed);
+        _showError(context, '${l10n.pdfImportFailed}\n$e');
       }
     }
   }

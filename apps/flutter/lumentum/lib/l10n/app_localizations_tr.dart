@@ -171,6 +171,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get pdfImporting => 'PDF içe aktarılıyor…';
 
   @override
+  String get pdfImportSuccess => 'kütüphaneye eklendi.';
+
+  @override
   String get readingLanguage => 'Arayüz dili';
 
   @override
