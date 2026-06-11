@@ -1,1 +1,1 @@
-"""Lumentum shared API uygulama modülleri (auth, license, reading)."""
+"""Lumentum shared API application package."""

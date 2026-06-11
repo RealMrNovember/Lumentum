@@ -1,7 +1,7 @@
 # LUMENTUM — Üretim Yol Haritası
 
 > **Durum:** Canlı takip dosyası — tamamlanan maddeler `[x]`, bekleyenler `[ ]` ile işaretlenir.  
-> **Son güncelleme:** 2026-06-11  
+> **Son güncelleme:** 2026-06-11 (Shared Brain monorepo)  
 > **Geliştirme:** Windows 10 (local) → Deploy: `31.40.199.47` (aaPanel)
 
 ---
@@ -19,6 +19,7 @@ Bu kurallar projenin tüm fazlarında geçerlidir. `.cursor/rules/lumentum-infra
 | Lisans kayıt verisi | `email`, `first_name`, `last_name` → license sunucusuna |
 | Sunucu izolasyonu | Lumentum dışındaki hiçbir sisteme müdahale yok |
 | Platform | Web + Android (APK) + iOS (IPA) |
+| Platform önceliği | **Web** (test) → **Android** → **iOS** |
 | Dil | Çoklu dil; **Arapça hariç** |
 | Ürün | Bilişsel okuma motoru (RSVP + ORP++ + CPS), sadece hızlı okuyucu değil |
 | **Mimari** | **Shared Brain** — `packages/` tek beyin, `apps/` ince istemciler |
@@ -366,11 +367,14 @@ Ham metin
 
 ### 7.2 Backend Görevleri
 
-- [x] Temel `/health` ve `/process` iskeleti
-- [ ] Proje yapısını `api/app/` modüler yapıya taşı
-- [ ] SQLAlchemy + Alembic migrations
-- [ ] JWT auth middleware
-- [ ] License client entegrasyonu
+- [x] Temel `/api/health` ve `/api/reading/process` iskeleti
+- [x] `packages/api/app/` modüler yapı (auth, license, reading, engine)
+- [x] OpenAPI sözleşmesi (`packages/contracts/openapi.yaml`)
+- [x] SQLAlchemy + SQLite kullanıcı modeli
+- [x] JWT auth (`/api/auth/register`, `/login`, `/me`)
+- [x] License client iskeleti (mock + license.cicibyte.com hazır)
+- [x] CORS (debug modda web test için açık)
+- [ ] Alembic migrations
 - [ ] E-posta servisi (aaPanel SMTP)
 - [ ] Rate limiting (slowapi)
 - [ ] Structured logging (Lumentum logs/ only)
@@ -379,29 +383,32 @@ Ham metin
 
 ---
 
-## 8. Flutter İstemci (Web + Android + iOS)
+## 8. Flutter İstemci — İnce Platform Katmanı (`apps/flutter/lumentum`)
+
+> API ve modeller `packages/lumentum_shared` üzerinden gelir. Bu dizinde iş mantığı yazılmaz.
 
 ### 8.1 Uygulama Modülleri
 
 ```
-lib/
+apps/flutter/lumentum/lib/
 ├── main.dart
 ├── app.dart                    # MaterialApp, routing, theme
 ├── core/
-│   ├── api/                    # Dio HTTP client, interceptors
 │   ├── auth/                   # Auth state, secure storage
-│   ├── license/                # License gate, expiry UI
+│   ├── license/                # License gate UI (veri: shared API)
 │   ├── i18n/                   # l10n ARB files
 │   └── theme/                  # Dark/light, typography
 ├── features/
 │   ├── onboarding/
-│   ├── auth/                   # Login, register, verify
+│   ├── auth/                   # Login, register, verify ekranları
 │   ├── reader/                 # RSVP canvas, ORP highlight
 │   ├── library/                # İçerik listesi (Faz 2)
 │   ├── settings/
 │   └── profile/
 └── shared/
     └── widgets/
+
+packages/lumentum_shared/       # ← API client + TokenData (ortak beyin)
 ```
 
 ### 8.2 RSVP Okuyucu Ekranı (Çekirdek UX)
@@ -412,12 +419,17 @@ lib/
 - [ ] Altın kural: slider değişince CPS arka planda adapte olur
 - [ ] Oturum sonu: kelime sayısı, ortalama WPM, süre
 
-### 8.3 Platform Görevleri
+### 8.3 Platform Görevleri (Öncelik: Web → Android → iOS)
 
-- [ ] `main.dart` demo kodunu kaldır, Lumentum shell kur
-- [ ] Web build → `lumentum.cicibyte.com/web/`
-- [ ] Android APK imzalama (release keystore — Cicibyte)
-- [ ] iOS IPA (Apple Developer hesabı gerekli)
+- [x] `main.dart` demo kaldırıldı — Lumentum shell (auth + home + reader)
+- [x] `lumentum_shared` entegrasyonu (API client + modeller)
+- [x] RSVP okuyucu ekranı (ORP vurgu, hız slider, play/pause)
+- [x] Auth ekranları (kayıt: ad, soyad, e-posta, şifre)
+- [x] TR + EN i18n (ARB)
+- [x] Web-first local config (`LumentumConfig.local` → port 8000)
+- [ ] Web build → `lumentum.cicibyte.com/web/` (production deploy)
+- [ ] Android APK imzalama (release keystore — Cicibyte) — **Faz 1b**
+- [ ] iOS IPA (Apple Developer hesabı gerekli) — **Faz 1c**
 - [ ] Deep link: `lumentum://` ve `https://lumentum.cicibyte.com/app/`
 - [ ] PWA manifest (web install desteği)
 
@@ -474,19 +486,23 @@ lib/
 ### 11.1 Local Geliştirme (Windows 10)
 
 ```powershell
-# Rust motor
+# Rust motor (packages/core-engine)
 cargo test -p lumentum_core
 cargo build --release -p core_engine_cli
 
-# Backend
-cd api_service
+# Shared Dart SDK
+cd packages/lumentum_shared
+dart test
+
+# Backend (packages/api)
+cd packages/api
 python -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
 uvicorn main:app --reload --port 8000
 
-# Flutter
-cd mobile_app/flutter/lumentum_reader
+# Flutter ince istemci (apps/flutter/lumentum)
+cd apps/flutter/lumentum
 flutter pub get
 flutter run -d chrome   # web
 flutter run             # cihaz
@@ -520,17 +536,21 @@ git push main
 
 ### Faz 0 — Temel ve Altyapı
 
-- [x] Git repo ve Rust workspace (`core_engine`, `core_engine_py`, `core_engine_cli`)
+- [x] Git repo ve Rust workspace (`packages/core-engine`, `core-engine-py`, `core-engine-cli`)
 - [x] Temel motor pipeline (tokenizer, orp, pacing, engine)
-- [x] FastAPI iskelet (`/health`, `/process`)
-- [x] Flutter proje iskeleti (platformlar)
+- [x] FastAPI iskelet (`/api/health`, `/api/reading/process`)
+- [x] Flutter proje iskeleti (`apps/flutter/lumentum`)
 - [x] `roadmap.md` oluşturuldu
 - [x] Kalıcı altyapı kuralları (`.cursor/rules/`)
+- [x] **Shared monorepo yapısı** (`packages/` + `apps/`)
+- [x] **Contracts katmanı** (`packages/contracts/` — OpenAPI + JSON Schema)
+- [x] **Dart shared SDK** (`packages/lumentum_shared/` — modeller + API client)
+- [x] `docs/shared-architecture.md`
 - [ ] `README.md` ve `todo.md` yeniden yazılacak (roadmap ile uyumlu)
 - [ ] Python 3.12 ortamı (PyO3 uyumluluğu)
 - [ ] Flutter SDK kurulumu ve `flutter doctor` doğrulama
-- [ ] `docs/` klasörü: `architecture.md`, `api-contract.md`, `license-integration.md`
-- [ ] GitHub Actions CI (test only, deploy yok)
+- [ ] `docs/license-integration.md` (license.cicibyte.com API doğrulama)
+- [ ] GitHub Actions CI (cargo test + dart test + pytest)
 
 ### Faz 1 — Ignition MVP (Web + Auth + Okuyucu)
 
@@ -543,18 +563,26 @@ git push main
 - [ ] PyO3 veya CLI production bridge
 
 #### Backend
-- [ ] Modüler FastAPI yapısı
-- [ ] SQLite + kullanıcı modeli
-- [ ] Auth (register, login, JWT, e-posta doğrulama)
-- [ ] License client → `license.cicibyte.com`
-- [ ] `/api/reading/process` (lisans korumalı)
+- [x] Modüler FastAPI yapısı
+- [x] SQLite + kullanıcı modeli
+- [x] Auth (register, login, JWT)
+- [x] License client → `license.cicibyte.com` (mock mod aktif)
+- [x] `/api/reading/process` (lisans korumalı)
+- [ ] E-posta doğrulama (aaPanel mail server)
 
-#### Flutter
-- [ ] Auth ekranları (kayıt: ad, soyad, e-posta, şifre)
-- [ ] License gate (expired → blok ekranı)
-- [ ] RSVP okuyucu ekranı
-- [ ] Metin yapıştır / dosya aç (TXT)
-- [ ] TR + EN i18n
+#### Flutter Web (öncelik 1)
+- [x] Auth ekranları (kayıt: ad, soyad, e-posta, şifre)
+- [x] License gate (expired → blok ekranı)
+- [x] RSVP okuyucu ekranı
+- [x] Metin yapıştır (TXT)
+- [x] TR + EN i18n
+- [ ] Uçtan uca web testi (local)
+
+#### Flutter Android (öncelik 2)
+- [ ] APK debug build ve cihaz testi
+
+#### Flutter iOS (öncelik 3)
+- [ ] IPA / TestFlight hazırlığı
 
 #### Sunucu
 - [ ] `lumentum.cicibyte.com` dizin yapısı kurulumu
@@ -635,17 +663,51 @@ git push main
 
 ---
 
-## 16. Sıradaki Hemen Yapılacaklar
+## 16. Showcase Sitesi (`lumentum.cicibyte.com` kök)
 
-Öncelik sırası (Faz 0 tamamlama → Faz 1 başlangıç):
+> **Öncelik:** Mevcut Faz 1 iskeleti tamamlandıktan hemen sonra — production deploy öncesi showcase zorunlu.
 
-1. [ ] `license.cicibyte.com` API endpoint'lerini doğrula ve `docs/license-integration.md` yaz
-2. [ ] `README.md` ve `todo.md` roadmap ile senkronize et
-3. [ ] Python 3.12 + PyO3 derlemesini düzelt
-4. [ ] FastAPI modüler yapı (`api/app/`) — auth + license iskeleti
-5. [ ] Flutter demo kaldır → auth + reader shell
-6. [ ] Sunucuda Lumentum dizin yapısını kur (izole)
-7. [ ] İlk staging deploy: `lumentum.cicibyte.com`
+`lumentum.cicibyte.com` yalnızca uygulama değil; Lumentum'u temsil eden **modern, efektli, kaliteli showcase** olmalıdır. Kullanıcılar siteden **Signup/Login** ile doğrudan uygulamaya geçer.
+
+Detay: `docs/showcase-site.md`
+
+### 16.1 Gereksinimler
+
+- [x] Premium koyu tema, animasyonlu gradient arka plan
+- [x] Hero bölümü + ürün vizyonu metni
+- [x] Canlı ORP++ demo önizlemesi
+- [x] Özellik kartları (ORP++, CPS, Göz yorgunluğu)
+- [x] Signup / Login CTA'ları → auth → uygulama
+- [x] Oturum açık kullanıcı → doğrudan HomeScreen
+- [ ] Parallax / scroll animasyonları (ince ayar)
+- [ ] Demo video veya interaktif okuma önizlemesi (15 sn)
+- [ ] Çoklu dil showcase metinleri (DE, FR, ES — Faz 2)
+- [ ] SEO meta, Open Graph, favicon seti
+- [ ] Lighthouse performans ≥ 90 (web)
+- [x] Production deploy → `lumentum.cicibyte.com`
+
+### 16.2 Akış
+
+```
+Misafir → Showcase (/) → Sign up / Sign in → Home → Reader
+Oturumlu → Home (showcase atlanır)
+```
+
+---
+
+## 17. Sıradaki Hemen Yapılacaklar
+
+Öncelik sırası:
+
+1. [ ] Flutter SDK kurulumu + local web test (showcase → kayıt → okuma)
+2. [ ] Showcase ince ayar (animasyon, SEO, favicon)
+3. [x] Sunucuda Lumentum dizin yapısını kur (izole)
+4. [x] Production API deploy → `lumentum.cicibyte.com/api/*`
+5. [x] Flutter web build + showcase deploy → `lumentum.cicibyte.com/`
+6. [ ] `license.cicibyte.com` API doğrulama + `docs/license-integration.md`
+7. [ ] Python 3.12 + PyO3 derlemesi (sunucu motoru)
+8. [ ] Android APK test — **Faz 1b**
+9. [ ] iOS IPA — **Faz 1c**
 
 ---
 
@@ -654,3 +716,6 @@ git push main
 | Tarih | Değişiklik |
 |-------|------------|
 | 2026-06-11 | `roadmap.md` ilk sürüm — altyapı kuralları, mimari, faz planı, lisans akışı |
+| 2026-06-11 | **Shared Brain** monorepo: `packages/` + `apps/`, contracts, lumentum_shared SDK |
+| 2026-06-11 | Faz 1 iskelet: modüler API, auth, license, Flutter web shell + RSVP reader |
+| 2026-06-11 | Showcase sitesi: landing, ORP demo, Signup/Login CTA (`docs/showcase-site.md`) |

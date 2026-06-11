@@ -6,7 +6,8 @@ alwaysApply: true
 # LUMENTUM — Kalıcı Altyapı Kuralları
 
 ## Domainler
-- **Uygulama:** `lumentum.cicibyte.com` — web arayüzü ve API sunumu
+- **Uygulama:** `lumentum.cicibyte.com` — showcase sitesi + web uygulama + API sunumu
+- **Showcase:** Kök URL (`/`) modern, efektli, kaliteli tanıtım sitesi; Signup/Login ile doğrudan uygulamaya geçiş
 - **Sunucu kökü:** `/www/wwwroot/lumentum.cicibyte.com` (aaPanel, 31.40.199.47)
 - **Lisans:** `license.cicibyte.com` — tüm Cicibyte uygulamaları için merkezi lisans sunucusu
 
@@ -23,6 +24,7 @@ alwaysApply: true
 
 ## Platform
 - **Web** + **Mobil** (APK, IPA) zorunlu — tek kod tabanı (Flutter)
+- **Öncelik sırası:** Web (test) → Android (APK) → iOS (IPA)
 - Geliştirme ortamı: Windows 10 (local)
 - Sunucu: aaPanel + mail server aktif
 

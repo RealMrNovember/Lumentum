@@ -1,0 +1,23 @@
+Bilişsel Okumanın Bilimi
+
+İnsan okuması ekranlar için değil, kağıt için evrimleşti. Geleneksel okuma gözleri satırlar boyunca zıplatır, şekilleri seslere çevirir ve anlamı kelime kelime yeniden kurar. Bu süreç yavaş, yorucu ve çoğu zaman anlama için gereksizdir. Bilişsel okuma sorunu yeniden çerçeveler: metin sabit kalsın diye gözleri hareket ettirmek yerine, metin tek bir odak noktasından beynin işleme kapasitesine uygun bir hızda akar.
+
+Rapid Serial Visual Presentation yani RSVP, kelimeleri sabit bir konumda teker teker gösterir. Okurun gözleri durur. Zihin, mekânsal arama yükü olmadan düzenli bir dil birimi akışı alır. Erken RSVP araştırmaları çarpıcı hız artışları gösterdi; ancak basit uygulamalar kendi sorunlarını doğurdu. Tek tip tempo dilin doğal ritmini yok sayar. Edatlar fazla yavaş kalır; yoğun terimler fazla hızlı gelir.
+
+Optimal Recognition Point, gözün kelime içinde doğal olarak duracağı noktayı hedefler. Türkçede eklemeli yapı nedeniyle odak noktası kelime köküne yakın konumlanır. ORP vurgusu tam saccade gerektirmeden görsel sisteme çapa sağlar. Lumentum bunu hece farkındalıklı ORP++ ile genişletir: odak uzunluk, morfoloji ve noktalama bağlamına göre uyum sağlar.
+
+Cognitive Pacing System, hızı bilgi yoğunluğuna göre modüle eder. Bağlaçlar hızlanır; özel isimler, sayılar ve nadir kelimeler yavaşlar. Amaç algısal sürekliliktir: okur mekanik bir metronom değil, tek bir düşünce akışı hissetmelidir. Tempo anlamla eşleştiğinde iç ses azalır ve çalışma belleği kod çözmek yerine bütünleştirmeye odaklanır.
+
+Göz yorgunluğunun azalması yan fayda değil; temel tasarım kısıtıdır. Ekran okuması zaten mavi ışık, parlama ve duruş yorgunluğuyla rekabet eder. Yatay taramayı kaldırmak orbiküler kaslar etrafındaki gerilimin önemli kaynağını ortadan kaldırır. Sabit odak noktası çevresel görüşün gevşemesine izin verir.
+
+Çalışma belleği ciddi sınırlarla çalışır. RSVP kelimeler anlamsal gruplama olmadan fazla hızlı gelirse belleği aşırı yükleyebilir. Etkili motorlar cümle sınırlarında mikro duraklar koyar ve paragraf yapısına saygı duyar. Okur yapıyı düzen yerine ritimle algılar.
+
+İç sesli okuma—kafadaki sessiz telaffuz—geleneksel olarak hızı konuşma hızıyla sınırlar. Bilişsel okuma daha yumuşak bir yaklaşım benimser: kelime düzeyinde akıcılığı ve öngörülebilir tempoyu artırarak iç ses ihtiyacını azaltır. Beyin yavaş yavaş anlamın işitsel prova olmadan da geldiğini öğrenir.
+
+Anlama ölçülmelidir, varsayılmamalıdır. Sunum hızlandıkça tutma çökerse kazanç anlamsızdır. İyi sistemler hafif anlama kontrolleri sunar, cümle geri sarma sağlar ve hata oranı artınca hızı düşürür. Lumentum anlama geri bildirimini gelecekteki CPS girdisi olarak görür.
+
+Dil önemlidir. Türkçe eklemeli yapı, İngilizce analitik yapı ve Almanca birleşik kelimeler farklı ORP sezgileri gerektirir. Üretim motoru İngilizce kurallarını küresel olarak sabitleyemez. Yerel duyarlı tokenizasyon profesyonel araçları demolarından ayırır. Bu metin uzun form Türkçe dayanıklılık testi için örnek görevi görür.
+
+Bu metni on beş ila otuz dakika boyunca değerlendirin. Boyun gerginliğine, göz kırpma sıklığına ve ana tezi sonradan hatırlayıp hatırlamadığınıza dikkat edin. ORP vurguları rahatsız edici değil yardımcı hissedilene kadar hızı ayarlayın.
+
+Okumanın geleceği daha hızlı gözler değil; semboller ile düşünce arasında daha iyi zamanlamadır. Lumentum bu arayüz katmanını adım adım inşa eder: tokenizer, ORP++, CPS ve sonunda okuma telemetrinizle eğitilmiş kişisel modeller. Uzun oturuma hoş geldiniz. Nefes almaya devam edin. Odak noktasına güvenin. Kelimelerin size gelmesine izin verin.

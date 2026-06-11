@@ -1,0 +1,23 @@
+The Science of Cognitive Reading
+
+Human reading evolved for paper, not screens. Traditional reading forces the eyes to saccade across lines, decode shapes into sounds, and rebuild meaning word by word. This pipeline is slow, tiring, and often unnecessary for comprehension. Cognitive reading reframes the problem: instead of moving the eyes across static text, the text moves through a single focal point at a pace matched to the brain's processing capacity.
+
+Rapid Serial Visual Presentation, or RSVP, displays one word at a time at a fixed position. The reader's eyes stay still. The mind receives a steady stream of linguistic units without the overhead of spatial search. Early RSVP research showed dramatic speed gains, but naive implementations created their own problems. Uniform pacing ignores the natural rhythm of language. Function words pass too slowly; dense technical terms arrive too quickly. The reader feels rushed or bored in alternating waves.
+
+Optimal Recognition Point placement addresses where the eye would naturally fixate within a word. In English, this point often lies slightly left of center for longer words. Highlighting the ORP character gives the visual system an anchor without requiring a full saccade. Lumentum extends this idea with syllable-aware ORP++: the focal highlight adapts to word length, morphology, and punctuation context.
+
+Cognitive Pacing System logic modulates speed based on information density. Conjunctions and articles accelerate. Numbers, names, and rare vocabulary slow down. The goal is perceptual continuity: the reader should feel a single flowing stream of thought rather than a mechanical metronome. When pacing matches meaning, subvocalization decreases and working memory can focus on integration instead of decoding.
+
+Eye strain reduction is not a side benefit; it is a core design constraint. Screen reading already competes with blue light, glare, and posture fatigue. Eliminating horizontal scanning removes a major source of muscular tension around the orbicular muscles. A stable focal point allows peripheral vision to relax. Sessions become longer not because the reader forces endurance, but because the interface stops fighting human physiology.
+
+Working memory operates with severe limits. George Miller's famous range of seven plus or minus two chunks still informs interface design decades later. RSVP can overload memory if words flash too quickly without semantic grouping. Effective engines insert micro-pauses at clause boundaries and respect paragraph structure even when displaying serially. The reader perceives structure through rhythm rather than layout.
+
+Subvocalization—the silent speech readers hear in their heads—traditionally limits speed to speaking rate. Speed reading courses often try to suppress it entirely, with mixed results. Cognitive reading takes a softer approach: reduce the need for subvocalization by increasing word-level fluency and predictable pacing, without demanding unnatural suppression. The brain gradually learns that meaning arrives without auditory rehearsal.
+
+Comprehension must be measured, not assumed. Faster presentation is worthless if retention collapses. Good systems embed lightweight comprehension checks, allow instant rewind by clause, and adapt speed when error rates rise. Lumentum treats comprehension feedback as future input to CPS algorithms: your pause patterns teach the engine your personal cognitive fingerprint.
+
+Language matters. Turkish agglutination, English analytic structure, and German compound formation each imply different ORP heuristics. A production engine cannot hardcode English rules globally. Locale-aware tokenization, hyphenation awareness, and diacritic handling separate professional tools from demos. This document itself serves as a long-form English sample for endurance testing.
+
+Use this text to evaluate comfort over fifteen to thirty minutes. Notice neck tension, blink rate, and whether you can recall the main thesis afterward. Adjust speed until ORP highlights feel helpful rather than distracting. Save your preferred pace; it will differ from other users and from your own performance across morning and evening sessions.
+
+The future of reading is not faster eyes. It is better timing between symbols and thought. Lumentum builds that interface layer by layer: tokenizer, ORP++, CPS, and eventually personalized models trained on your reading telemetry. Welcome to the long session. Keep breathing. Trust the focal point. Let the words come to you.

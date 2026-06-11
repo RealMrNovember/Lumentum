@@ -1,0 +1,20 @@
+[Unit]
+Description=Lumentum Shared API (FastAPI)
+After=network.target
+
+[Service]
+Type=simple
+User=www
+Group=www
+WorkingDirectory=/www/wwwroot/lumentum.cicibyte.com/api
+EnvironmentFile=/www/wwwroot/lumentum.cicibyte.com/api/.env
+ExecStart=/www/wwwroot/lumentum.cicibyte.com/api/.venv/bin/uvicorn main:app --host 127.0.0.1 --port 18765
+Restart=on-failure
+RestartSec=5
+
+# Yalnızca Lumentum
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
