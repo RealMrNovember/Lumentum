@@ -1,0 +1,144 @@
+openapi: 3.1.0
+info:
+  title: Lumentum Shared API
+  description: |
+    Merkezi API — Web, Android, iOS ve gelecekteki tüm platformlar bu sözleşmeyi kullanır.
+    Tek beyin: `packages/api` + `packages/core-engine`.
+  version: 0.1.0
+  contact:
+    name: Cicibyte
+    url: https://lumentum.cicibyte.com
+
+servers:
+  - url: https://lumentum.cicibyte.com
+    description: Production
+  - url: http://localhost:8000
+    description: Local development
+
+tags:
+  - name: system
+  - name: reading
+  - name: auth
+  - name: license
+
+paths:
+  /api/health:
+    get:
+      tags: [system]
+      summary: Sistem ve motor sağlık kontrolü
+      operationId: getHealth
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+
+  /api/reading/process:
+    post:
+      tags: [reading]
+      summary: Metni RSVP token akışına dönüştür
+      operationId: processReading
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [text]
+              properties:
+                text:
+                  type: string
+                  minLength: 1
+      responses:
+        "200":
+          description: Token listesi
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProcessReadingResponse"
+
+  /api/auth/register:
+    post:
+      tags: [auth]
+      summary: Kayıt (Faz 1 — planlanmış)
+      operationId: register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+      responses:
+        "201":
+          description: Kayıt oluşturuldu, e-posta doğrulama gerekli
+
+  /api/auth/login:
+    post:
+      tags: [auth]
+      summary: Giriş (Faz 1 — planlanmış)
+      operationId: login
+      responses:
+        "200":
+          description: JWT token çifti
+
+  /api/license/status:
+    get:
+      tags: [license]
+      summary: Güncel lisans durumu (Faz 1 — planlanmış)
+      operationId: getLicenseStatus
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Lisans durumu
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LicenseStatus"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    HealthResponse:
+      type: object
+      required: [status, has_rust, has_cli, architecture]
+      properties:
+        status: { type: string, enum: [ok] }
+        has_rust: { type: boolean }
+        has_cli: { type: boolean }
+        architecture: { type: string, enum: [shared] }
+
+    TokenData:
+      $ref: "./schemas/token.json"
+
+    ProcessReadingResponse:
+      type: object
+      required: [result, source]
+      properties:
+        result:
+          type: array
+          items:
+            $ref: "#/components/schemas/TokenData"
+        source:
+          type: string
+          enum: [rust, rust-cli, python-fallback]
+
+    RegisterRequest:
+      type: object
+      required: [email, password, first_name, last_name]
+      properties:
+        email: { type: string, format: email }
+        password: { type: string, minLength: 8 }
+        first_name: { type: string }
+        last_name: { type: string }
+        locale: { type: string, default: tr }
+
+    LicenseStatus:
+      $ref: "./schemas/license.json"

@@ -1,7 +1,7 @@
 [workspace]
 members = [
-    "core_engine",
-    "core_engine_py",
-    "core_engine_cli"
+    "packages/core-engine",
+    "packages/core-engine-py",
+    "packages/core-engine-cli"
 ]
 resolver = "2"

@@ -9,4 +9,4 @@ crate-type = ["cdylib"]
 
 [dependencies]
 pyo3 = { version = "0.21", features = ["extension-module"] }
-lumentum_core = { path = "../core_engine" }
+lumentum_core = { path = "../core-engine" }

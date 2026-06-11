@@ -1,15 +1,24 @@
-core_engine/target/
+# Rust
+target/
+packages/core-engine/target/
+packages/core-engine-cli/target/
+packages/core-engine-py/target/
+
+# Python
 .venv/
 .tools/
-target/
-core_engine_cli/target/
-core_engine_py/target/
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+packages/api/__pycache__/
+
+# Flutter / Dart
+apps/flutter/*/build/
+apps/flutter/*/.dart_tool/
+apps/flutter/*/.idea/
+packages/lumentum_shared/.dart_tool/
+
+# OS
 .DS_Store
 Thumbs.db
-mobile_app/flutter/*/build/
-mobile_app/flutter/*/.idea/
-api_service/__pycache__/

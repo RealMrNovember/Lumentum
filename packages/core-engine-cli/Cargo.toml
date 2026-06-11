@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-lumentum_core = { path = "../core_engine" }
+lumentum_core = { path = "../core-engine" }
 
 [[bin]]
 name = "lumentum_engine_cli"

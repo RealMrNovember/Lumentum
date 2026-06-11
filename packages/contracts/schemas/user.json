@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lumentum.cicibyte.com/schemas/user.json",
+  "title": "User",
+  "description": "Lumentum kullanıcı modeli — lisans e-posta üzerinden bağlanır",
+  "type": "object",
+  "required": ["email", "first_name", "last_name"],
+  "properties": {
+    "id": { "type": "string", "format": "uuid" },
+    "email": { "type": "string", "format": "email" },
+    "first_name": { "type": "string", "minLength": 1 },
+    "last_name": { "type": "string", "minLength": 1 },
+    "locale": { "type": "string", "default": "tr" },
+    "email_verified": { "type": "boolean", "default": false }
+  },
+  "additionalProperties": false
+}

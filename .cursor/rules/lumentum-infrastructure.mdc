@@ -1,0 +1,43 @@
+---
+description: LUMENTUM kalıcı altyapı, sunucu ve lisans kuralları — asla ihlal edilmez
+alwaysApply: true
+---
+
+# LUMENTUM — Kalıcı Altyapı Kuralları
+
+## Domainler
+- **Uygulama:** `lumentum.cicibyte.com` — web arayüzü ve API sunumu
+- **Sunucu kökü:** `/www/wwwroot/lumentum.cicibyte.com` (aaPanel, 31.40.199.47)
+- **Lisans:** `license.cicibyte.com` — tüm Cicibyte uygulamaları için merkezi lisans sunucusu
+
+## Lisans Kuralları
+- Lisans **yalnızca kayıtlı kullanıcının e-posta adresi** üzerinden bağlanır
+- Aktivasyon/kayıt sırasında `license.cicibyte.com`'a gönderilir: **e-posta**, **ad**, **soyad**
+- Lumentum, lisans doğrulaması olmadan premium/aktif kullanım sunmaz
+
+## Sunucu İzolasyonu (KRİTİK)
+- Sunucuda başka uygulama/sistemler çalışıyor — **Lumentum dışında hiçbir sisteme müdahale edilmez**
+- Yalnızca `/www/wwwroot/lumentum.cicibyte.com` ve Lumentum'a özel servis/nginx yapılandırması
+- Paylaşımlı servisleri (MySQL, Redis vb.) yeniden yapılandırma veya restart etme — Lumentum kendi izole kaynaklarını kullanır
+- SSH key ile erişim mevcut; dosya transferi ve deploy yalnızca Lumentum kapsamında
+
+## Platform
+- **Web** + **Mobil** (APK, IPA) zorunlu — tek kod tabanı (Flutter)
+- Geliştirme ortamı: Windows 10 (local)
+- Sunucu: aaPanel + mail server aktif
+
+## Dil Desteği
+- Çoklu dil (i18n) zorunlu
+- **Arapça desteklenmez** (RTL/ORP karmaşıklığı nedeniyle bilinçli hariç)
+
+## Ürün Mantığı
+- RSVP + ORP++ + CPS bilişsel okuma motoru (Rust çekirdek)
+- Kullanıcı hızı kontrol ettiğini sanmalı; motor arka planda tempo karar verir
+- AI katmanı öneri değil, sessiz adaptasyon yapar
+
+## Shared Mimari (Zorunlu)
+- **Tek beyin:** `packages/` — motor, API, sözleşmeler, Dart SDK
+- **İnce istemciler:** `apps/` — yalnızca UI ve platform özellikleri
+- Tüm platformlar `packages/api` + `packages/contracts` üzerinden ortak veri çeker
+- İş mantığı istemciye kopyalanmaz; yeni platform = yeni `apps/*` + mevcut shared
+- Değişiklik sırası: contracts → api → lumentum_shared → apps

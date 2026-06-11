@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lumentum.cicibyte.com/schemas/license.json",
+  "title": "LicenseStatus",
+  "description": "license.cicibyte.com yanıtının Lumentum içindeki normalize hali",
+  "type": "object",
+  "required": ["email", "status", "product_id"],
+  "properties": {
+    "email": { "type": "string", "format": "email" },
+    "product_id": { "type": "string", "const": "lumentum" },
+    "status": {
+      "type": "string",
+      "enum": ["active", "trial", "expired", "revoked", "pending"]
+    },
+    "plan_tier": { "type": "string" },
+    "expires_at": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}
